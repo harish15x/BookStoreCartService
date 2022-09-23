@@ -29,6 +29,7 @@ public class CartService implements ICartService {
     public ResponseClass addCart(CartDTO cartDTO) {
         CartModel cartModel = new CartModel(cartDTO);
         cartModel.setQuantity((cartModel.getQuantity()));
+        cartModel.setTotalPrice(cartDTO.getTotalPrice());
         cartRepository.save(cartModel);
         return new ResponseClass(200, "Sucessfull", cartModel);
     }
@@ -40,6 +41,7 @@ public class CartService implements ICartService {
             Optional<CartModel> isCartPresent = cartRepository.findById(cartId);
             if (isCartPresent.isPresent()){
                 isCartPresent.get().setQuantity(cartDTO.getQuantity());
+                isCartPresent.get().setTotalPrice(cartDTO.getTotalPrice());
                 cartRepository.save(isCartPresent.get());
                 return new ResponseClass(200, "Sucessfull",isCartPresent.get());
             }
